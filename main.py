@@ -34,7 +34,10 @@ def translator(audio_file):
         ).translate(transcription)
 
         # 3️⃣ ElevenLabs client
-        client = ElevenLabs(api_key=ELEVENLABS_API_KEY)
+        try:
+            client = ElevenLabs(api_key=ELEVENLABS_API_KEY)
+        except Exception as e:
+            raise gr.Error(f"Failed to initialize ElevenLabs client: {str(e)}")
 
         # 4️⃣ Text to speech
         response = client.text_to_speech.convert(
